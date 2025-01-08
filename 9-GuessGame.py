@@ -8,20 +8,23 @@ hard_attempts = 5
 
 def set_attempts(level):
     if level == "easy":
-        print(f"You have {easy_attempts} attempts to guess the number.")
         return easy_attempts
     elif level == "hard":
-        print(f"You have {hard_attempts} attempts to guess the number.")
         return hard_attempts
     else:
         print("Invalid input. Please try again.")
-        exit()
+        return
 
 
 def game_logic(target):
 
     level_input = input("Choose a difficulty. Type 'easy' or 'hard': ").lower()
-    lives = set_attempts(level_input)
+    
+    if set_attempts(level_input) == None:
+        return
+    else:
+        lives = set_attempts(level_input)
+        print(f"You have {lives} attempts to guess the number.")
 
     while lives > 0:
 
@@ -29,7 +32,7 @@ def game_logic(target):
 
         if guess == target:
             print(f"You got it! The answer was {target}.")
-            exit()
+            return
         elif guess > target:
             lives -= 1
             print(f"Too high. \nGuess again. \nYou have {lives} attempt(s) remaining to guess the number. \n")
@@ -38,6 +41,6 @@ def game_logic(target):
             print(f"Too low. \nGuess again. \nYou have {lives} attempt(s) remaining to guess the number. \n")
     
     print(f"You've run out of guesses. The answer was {target}.")
-    exit()
+    return
 
 game_logic(random)
