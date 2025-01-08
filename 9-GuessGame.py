@@ -1,21 +1,27 @@
 from random import randint
 
 print("Welcome to the Number Guessing Game! \nI'm thinking of a number between 1 and 100.")
-level = input("Choose a difficulty. Type 'easy' or 'hard': ").lower()
-
 random = randint(1, 100)
 
-if level == "easy":
-    attempts = 10
-elif level == "hard":
-    attempts = 5
-else:
-    print("Invalid input. Please try again.")
-    exit()
+easy_attempts = 10
+hard_attempts = 5
 
-print(f"You have {attempts} attempts remaining to guess the number.")
+def set_attempts(level):
+    if level == "easy":
+        print(f"You have {easy_attempts} attempts to guess the number.")
+        return easy_attempts
+    elif level == "hard":
+        print(f"You have {hard_attempts} attempts to guess the number.")
+        return hard_attempts
+    else:
+        print("Invalid input. Please try again.")
+        exit()
 
-def game_logic(lives, target):
+
+def game_logic(target):
+
+    level_input = input("Choose a difficulty. Type 'easy' or 'hard': ").lower()
+    lives = set_attempts(level_input)
 
     while lives > 0:
 
@@ -26,12 +32,12 @@ def game_logic(lives, target):
             exit()
         elif guess > target:
             lives -= 1
-            print(f"Too high. \nGuess again. \nYou have {lives} attempts remaining to guess the number. \n")
+            print(f"Too high. \nGuess again. \nYou have {lives} attempt(s) remaining to guess the number. \n")
         elif guess < target:
             lives -= 1
-            print(f"Too low. \nGuess again. \nYou have {lives} attempts remaining to guess the number. \n")
+            print(f"Too low. \nGuess again. \nYou have {lives} attempt(s) remaining to guess the number. \n")
     
     print(f"You've run out of guesses. The answer was {target}.")
     exit()
 
-game_logic(attempts, random)
+game_logic(random)
