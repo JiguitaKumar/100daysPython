@@ -24,7 +24,7 @@ def game_logic(target):
         return
     else:
         lives = set_attempts(level_input)
-        print(f"You have {lives} attempts to guess the number.")
+        print(f"You have {lives} attempts to guess the number.\n")
 
     while lives > 0:
 
