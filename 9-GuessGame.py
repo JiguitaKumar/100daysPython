@@ -1,6 +1,6 @@
 from random import randint
 
-print("Welcome to the Number Guessing Game! \nI'm thinking of a number between 1 and 100.")
+print("Welcome to the Number Guessing Game! \nI'm thinking of a number between 1 and 100.\n")
 random = randint(1, 100)
 
 easy_attempts = 10
