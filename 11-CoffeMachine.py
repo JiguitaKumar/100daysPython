@@ -68,7 +68,7 @@ def enough_resources(drink):
 
 
 def update_resource(drink):
-     for ingredient in MENU[drink]["ingredients"]:
+    for ingredient in MENU[drink]["ingredients"]:
         resources[ingredient] = resources[ingredient] - MENU[drink]["ingredients"][ingredient]
 
 
