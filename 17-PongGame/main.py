@@ -3,7 +3,6 @@ from paddle import Paddle
 from ball import Ball
 from line import Line
 from scoreboard import Scoreboard
-import time
 
 # screen setup
 screen = Screen()
@@ -23,8 +22,6 @@ x_coordinate = 350
 right_paddle = Paddle(x_coordinate)
 left_paddle = Paddle(-x_coordinate)
 
-#screen.update()
-#screen.tracer(1)
 screen.listen()
 # make the screen listen - right paddle
 screen.onkey(right_paddle.up, "Up")
@@ -34,19 +31,26 @@ screen.onkey(right_paddle.down, "Down")
 screen.onkey(left_paddle.up, "a")
 screen.onkey(left_paddle.down, "z")
 
-# create the ball
+# create first ball
 ball = Ball()
 
 # create score
 right_player_score = 0
 left_player_score = 0
-right_player_scoreboard = Scoreboard(right_player_score, 30)
-left_player_scoreboard = Scoreboard(left_player_score, -30)
+scoreboard = Scoreboard(right_player_score, left_player_score)
 
 game_is_on = True
 while game_is_on:
-    time.sleep(0.05)
     screen.update()
-    ball.move(right_paddle, left_paddle)
+    point = ball.move(right_paddle, left_paddle)
+    if point is None:
+        pass
+    else:
+        if point == 1:
+            right_player_score += 1
+        elif point == -1:
+            left_player_score += 1
+        ball = Ball()
+        scoreboard.score_update(right_player_score, left_player_score)
 
 screen.exitonclick()
