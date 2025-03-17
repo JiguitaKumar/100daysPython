@@ -1,6 +1,7 @@
 from turtle import Turtle
 from random import randint
 from paddle import Paddle
+import time
 
 
 class Ball(Turtle):
@@ -10,7 +11,9 @@ class Ball(Turtle):
         self.shape("circle")
         self.penup()
         self.color("white")
-        self.seth(randint(0, 360))
+        self.seth(randint(-75, 75) + 180 * randint(0,1))
+        self.move_speed = 0.05
+        print(self.heading())
 
     def wall_collision(self):
         curr_dir = self.heading()
@@ -19,13 +22,22 @@ class Ball(Turtle):
 
     def paddle_collision(self, paddle: Paddle):
         curr_dir = self.heading()
-        if (abs(self.xcor() - paddle.xcor()) < 20) and (abs(self.ycor() - paddle.ycor()) < 30):
-            print(curr_dir)
+        if (abs(self.xcor() - paddle.xcor()) < 20) and (abs(self.ycor() - paddle.ycor()) < 45):
             self.seth(curr_dir - 180 - (self.ycor() - paddle.ycor()))
-            print(self.heading())
+            return True
 
     def move(self, r_paddle: Paddle, l_paddle: Paddle):
+        time.sleep(self.move_speed)
+        print(self.move_speed)
         self.wall_collision()
-        self.paddle_collision(r_paddle)
-        self.paddle_collision(l_paddle)
+        if self.paddle_collision(r_paddle) is True or self.paddle_collision(l_paddle) is True:
+            self.move_speed = self.move_speed - 0.0025
         self.forward(10)
+
+        if self.xcor() > 400:
+            self.ht()
+            return 1
+
+        if self.xcor() < -400:
+            self.ht()
+            return -1
