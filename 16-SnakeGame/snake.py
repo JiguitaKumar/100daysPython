@@ -9,6 +9,14 @@ class Snake:
 
     def __init__(self):
         self.snake = []
+        self.reset()
+        self.head = self.snake[0]
+        self.tail = self.snake[-1]
+
+    def reset(self):
+        for square in self.snake:
+            square.color("black")
+        self.snake.clear()
         x_init_pos = 0
         y_init_pos = 0
         for _ in range(INITIAL_SNAKE_SIZE):
