@@ -14,7 +14,9 @@ snake = Snake()
 food = Food()
 
 score = 0
-scoreboard = Scoreboard(score)
+with open("curr_record.txt") as f:
+    high_score = int(f.read())
+scoreboard = Scoreboard(score, high_score)
 
 screen.listen()
 screen.onkey(snake.up, "Up")
@@ -22,19 +24,22 @@ screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
 
-can_move = True
-while can_move:
+
+while True:
     screen.update()
     time.sleep(0.1)
     snake.move()
-    can_move = snake.check_position()
+    if not snake.check_position():
+        high_score = scoreboard.reset_scoreboard(score, high_score)
+        score = 0
+        snake.reset()
 
     #detect colision with food
     if snake.head.distance(food) < 15:
 
         #update score
         score += 1
-        scoreboard.update_scoreboard(score)
+        scoreboard.update_scoreboard(score, high_score)
 
         #increase snakesize
         snake.add_square(snake.tail.xcor(), snake.tail.ycor())
@@ -42,6 +47,3 @@ while can_move:
         #delete current food and create new food
         food.ht()
         food = Food()
-
-scoreboard.game_over()
-screen.exitonclick()
